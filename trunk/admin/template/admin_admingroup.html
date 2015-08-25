@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>管理员分组管理</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#show_list').find('tr').hover(function(){
+		$(this).find('td').css('background','#ccffcc');
+	},function(){
+		$(this).find('td').css('background','');
+	});
+});
+</script>
+<?php
+	$tech_num = (count($tech_arr)-1);
+	$show_tech = $tech_arr[rand(0,$tech_num)];
+?>
+<!--
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$str = '<?php echo $show_tech;?>';
+		$('#show_tech').html("<em>小提示：</em>"+$str).fadeIn('slow');
+	});
+
+</script>
+-->
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 管理员分组列表</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+
+<div class="order_contain">
+<form name="maininfo" method="post" enctype="multipart/form-data" action="#" class="form">
+ <div class="order_main">
+ <table cellpadding="0" cellspacing="0" width="100%">
+ 	<thead>
+		<tr><th style="width:10%">组ID</th><th style="width:20%">组名称</th><th style="width:40%">组描述</th><th style="width:10%">状态</th><th style="width:20%">操作</th></tr>
+	</thead>
+	<tbody style="text-align:center" id="show_list">
+		<?php
+			if(empty($admin_group)){
+			die("还没有添加分组");
+			}else{
+			foreach($admin_group as $k=>$v){
+		?>
+		<tr>
+		<td style="width:10%;text-align:center"><?php echo $v['id'];?></td><td style="width:20%;text-align:center"><?php echo $v['admin_group_name'];?></td><td style="width:40%;text-align:center"><?php echo $v['admin_group_info'];?></td><td style="width:10%"><?php if($v['is_disable']){?>禁用<?php }else{?>开启<?php }?></td><td style="width:20%;text-align:center"><a href="admin_admin.php?action=admin_group_edit&id=<?php echo $v['id'];?>" style="padding:0 2px;">修改</a>|<a href="javascript:if(confirm('确定要删除么？删除后不可恢复')){location.href='admin_admin.php?action=admin_group_del&id=<?php echo $v['id'];?>';}" style="padding:0 2px;">删除</a></td>
+		</tr>
+		<?php
+		}
+		}
+		?>
+	</tbody>
+ </table>
+ </div>
+</form>
+</div>
+<div class="ie8-height"></div>
+
+</body>
+</html>

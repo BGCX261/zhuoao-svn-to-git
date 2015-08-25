@@ -1,0 +1,25 @@
+<div class="footer_wrapper">
+	<div class="foot">
+		<div class="foot_left">
+			
+		</div><!--left-->
+		<div class="foot_right">
+			<div class="foot_nav">
+				{loop source=nav_bottom()}
+				<a href="{print $v['url']/}" title="{print $v['cate_name']/}">{print $v['cate_name']/}</a>{if !$v['last']}|{/if}
+				{/loop}
+			</div>
+			{assign source=webinfo('web_address') name=address/}
+			{assign source=webinfo('web_phone') name=phone/}
+			{assign source=webinfo('web_mail') name=mail/}
+			<p>{if $address}地址：{print $address/}{/if}{if $phone}&nbsp;&nbsp;联系电话：{print $phone/}{/if}{if $mail}&nbsp;&nbsp;邮箱：{print $mail/}{/if}</p>
+			<p>{print webinfo('web_powerby')/}</p>		
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<!--页脚-->
+{print webinfo('web_yinxiao')/}
+
+{include kefu/}
+

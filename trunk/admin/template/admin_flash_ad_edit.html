@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>主广告图片修改</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<script type="text/javascript" src="template/images/dialog-min.js"></script>
+<link type="text/css" href="template/images/dialog/dialog.css" rel="stylesheet" />
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.q').find('ul li').click(function(){
+		$index=$('.q').find('ul li').index(this);
+		$('#tb').find('div').eq($index).show().siblings().hide();
+	});
+});
+</script>
+<?php
+	$tech_num = (count($tech_arr)-1);
+	$show_tech = $tech_arr[rand(0,$tech_num)];
+?>
+<!--
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$str = '<?php echo $show_tech;?>';
+		$('#show_tech').html("<em>小提示：</em>"+$str).fadeIn('slow');
+	});
+
+</script>
+-->
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 主广告图片修改</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+
+<div class="admin_fh"><a href="?cate_id=<?php echo $cate_id;?>&lang=<?php echo $lang;?>">返回</a></div>
+		
+<div class="order_contain">	
+<form name="maininfo" method="post" enctype="multipart/form-data" action="?" class="form">
+<div class="order_main">
+ <table cellpadding="0" cellspacing="0" width="100%" class="table_info1">
+ 	<thead>
+		<tr><th class="w1">参数说明</th><th class="w2">参数值</th><th class="w3 r">变量名</th></tr>
+	</thead>
+	<tbody>
+		<tr>
+		  <td class="w1" style="text-align:center">分类:</td><td class="w2"><select name="cate_id">
+		  <option value="">请选择分类</option>
+		  <?php
+		  if($rel_cate){
+		  		foreach($rel_cate as $row){
+		  ?>
+		   <option value="<?php echo $row['id'];?>" <?php if($row['id'] == $cate_id){ echo 'selected="selected"';}?>><?php echo $row['cate_name'];?></option>
+		  <?php
+		  		}
+			}	
+		  ?>
+		  </select></td><td class="w3"></td>
+		</tr>
+		<tr>
+		  <td class="w1" style="text-align:center">图片地址:</td><td class="w2">
+		  <input name="pic" value="<?php echo $rel[0]['pic'];?>" style="width:30%; display:block; float:left; margin-top:55px;" id="pic_path" /><p style="margin-top:55px;" class="admin_up_pic"><a href="#" id="flash_pic">上传图片</a></p><span id="show_pic_path" class="admin_show_pic"><?php if($rel[0]['pic']){?><a href="../upload/<?php echo $rel[0]['pic'];?>" target="_blank"><img src="../upload/<?php echo $rel[0]['pic'];?>"  height="120" width="120" border="0"/></a><?php }else{?><a href="#" id="flash_pic"><img src="../upload/no_pc.gif"  height="120" width="120"/></a> <?php }?></span></td><td class="w3"></td>
+		</tr>
+		<tr>
+		  <td class="w1" style="text-align:center">链接地址:</td><td class="w2"><input type="text" name="pic_url" style="width:80%" value="<?php echo empty($rel[0]['pic_url'])?'http://':$rel[0]['pic_url'];?>"/></td><td class="w3"></td>
+		</tr>
+		<tr>
+		  <td class="w1" style="text-align:center">图片描述:</td><td class="w2"><input type="text" name="pic_text" style="width:80%" value="<?php echo $rel[0]['pic_text'];?>"/></td><td class="w3"></td>
+		</tr>
+		<tr>
+		  <td class="w1" style="text-align:center">排序:</td><td class="w2"><input type="text" name="pic_order" style="width:20%" value="<?php echo empty($rel[0]['pic_order'])?10:$rel[0]['pic_order'];?>"/></td><td class="w3"></td>
+		</tr>
+	</tbody>
+ </table>
+ </div>
+
+<div class="order_btn">
+<input type="hidden" name="action" value="save_edit"/><input type="hidden" name="lang" value="<?php echo $rel[0]['lang'];?>"/><input type="hidden" name="id" value="<?php echo $rel[0]['id'];?>" />
+  <input type="submit" value="确定" name="submit" /><input type="reset" style="margin:0 10px;" value="重置" name="reset"/>
+ </div>
+</form>
+</div>
+
+<script type="text/javascript">
+$('#flash_pic').wBox({title:'主广告图片',requestType: "iframe",target:"admin_pic_upload.php?type=radio&get=pic_path",iframeWH:{width:800,height:400}});
+$('#flash_pic2').wBox({title:'主广告图片',requestType: "iframe",target:"admin_pic_upload.php?type=radio&get=pic_path",iframeWH:{width:800,height:400}});
+</script>
+</body>
+</html>

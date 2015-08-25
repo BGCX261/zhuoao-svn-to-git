@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>移动内容</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<script type="text/javascript" src="template/images/form.js"></script>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#ex').click(function(){
+		$expt=$(this).find('#expt');
+		$val=$expt.text();
+		if($val=='展开'){
+			$('#tb2').show();
+			$expt.text('收起');
+		}else{
+			$('#tb2').hide();
+			$expt.text('展开');
+		}
+	});
+	
+});
+
+function ck_show_url(n,id){
+	$ck=$(n).attr('checked');
+	if($ck){
+		$(id).show();
+	}else{
+		$(id).hide();
+	}
+}
+</script>
+
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 移动内容</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+ 
+<div class="order_contain">
+<form name="maininfo" method="post" action="?" class="form" enctype="multipart/form-data">
+ <div class="order_main">
+ <table cellpadding="0" cellspacing="0" width="100%">
+ 	<thead>
+		<tr><th style="width:20%">参数说明</th><th style="width:80%">参数值</th></tr>
+	</thead>
+	<tbody>
+		<tr>
+		  <td style="width:20%;text-align:center" class="w1">准备移动的内容ID：</td><td style="width:80%">
+		  <?php
+		  if(!empty($all)){
+		  	echo $arc_id=implode(',',$all);
+		  }
+		  ?>
+		 
+		  </td>
+		</tr>
+		<tr>
+		  <td style="width:20%;text-align:center" class="w1">移动内容到：</td><td style="width:80%">
+		  <select name="move_cate">
+		  <option value="0">请选择栏目</option>
+		 <?php get_post_catelist($lang,$channel,$cate);?>
+		  </select>栏目下
+		  </td>
+		</tr>
+
+		
+		
+		</tbody>
+ </table>
+ </div>
+<div class="order_btn">
+<input type="hidden" name="action" value="save_move"/> <input type="hidden" value="<?php echo $arc_id;?>" name="arc_id" /><input type="hidden" value="<?php echo $lang;?>" name="lang" /><input type="hidden" value="<?php echo $channel;?>" name="channel" />
+  <input type="submit" value="确定" class="go" name="submit"/><input type="reset" style="margin:0 10px;" class="go" value="重置" name="reset"/>
+ </div>
+</form>
+</div><!--内容切换-->
+
+
+
+
+</body>
+</html>

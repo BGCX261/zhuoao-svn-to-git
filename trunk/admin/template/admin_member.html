@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>会员列表</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<?php
+	$tech_num = (count($tech_arr)-1);
+	$show_tech = $tech_arr[rand(0,$tech_num)];
+?>
+<!--
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$str = '<?php echo $show_tech;?>';
+		$('#show_tech').html("<em>小提示：</em>"+$str).fadeIn('slow');
+	});
+
+</script>
+-->
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 会员列表</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+
+<div class="order_contain">
+<form name="maininfo" method="post" enctype="multipart/form-data" action="#" class="form">
+ <div class="order_main">
+ <table cellpadding="0" cellspacing="0" width="100%">
+ 	<thead>
+		<tr><th style="width:10%">用户名</th><th style="width:20%">管理分组</th><th style="width:40%">管理范围</th><th style="width:10%">状态</th><th style="width:20%">操作</th></tr>
+	</thead>
+	<tbody style="text-align:center">
+	<?php
+	if(!empty($rel)){
+	foreach($rel as $k=>$v){
+	?>
+		<tr>
+		<td style="width:10%; text-align:center"><a href="?action=show&id=<?php echo $v['id'];?>"><?php echo $v['member_user'];?></a></td><td style="width:20%">
+		<?php
+		foreach($member_group as $key=>$value){
+			if($value['id']==$v['member_purview']){
+				echo $value['member_group_name'];
+				break;
+			}
+		}
+		?>
+		</td><td style="width:10%; text-align:center"><?php echo "用户昵称:".$v['member_nich']."&nbsp;&nbsp;用户姓名：".$v['member_name'];?></td><td style="width:10%; text-align:center"><?php if($v['is_disable']){echo "<span style=\"color:red\">禁用</span>";}else{ echo "开启";}?></td><td style="width:20%; text-align:center"><a href="?action=member_edit&id=<?php echo $v['id'];?>" style="padding:0 2px;">修改</a>|<a href="javascript:if(confirm('确定要删除么？删除后不可恢复')){location.href='admin_member.php?action=member_del&id=<?php echo $v['id'];?>';}" style="padding:0 2px;">删除</a></td>
+		</tr>
+	<?php
+	}
+	}
+	?>	
+	</tbody>
+ </table>
+ </div>
+ <div class="page page_fy">
+		<?php echo page('admin_member.php',$page,$query,$total_num,$total_page);?>
+ </div>
+</form>
+</div>
+
+<div class="ie8-height"></div>
+</body>
+</html>

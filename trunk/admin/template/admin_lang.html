@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>语言列表</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<script type="text/javascript" src="template/images/admin.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#show_list').find('tr').hover(function(){
+		$(this).find('td').css('background','#ccffcc');
+	},function(){
+		$(this).find('td').css('background','');
+	});
+	
+});
+</script>
+<?php
+	$tech_num = (count($tech_arr)-1);
+	$show_tech = $tech_arr[rand(0,$tech_num)];
+?>
+<!--
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$str = '<?php echo $show_tech;?>';
+		$('#show_tech').html("<em>小提示：</em>"+$str).fadeIn('slow');
+	});
+
+</script>
+-->
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 语言列表</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+
+<div class="order_contain">
+<form name="maininfo" method="post" enctype="multipart/form-data" class="form">
+ <div class="order_main">
+ <table cellpadding="0" cellspacing="0" width="100%" style="text-align:center">
+ 	<thead>
+		<tr><th style="width:10%;"><span title="鼠标点击数字进行排序" class="help"></span>排序</th><th style="width:20%;">语言名称</th><th style="width:20%;">标示</th><th style="width:10%">是否开启</th><th style="width:20%;">是否外部链接</th><th style="width:20%">操作</th></tr>
+	</thead>
+	<tbody id="show_list">
+	<?php
+	if(empty($lang_cache)){
+	echo "还没有添加语言";
+	exit;
+	}
+	foreach($lang_cache as $key =>$value){
+	?>
+		<tr>
+		<td style="width:10%;"><?php echo $value['lang_order'];?></td><td style="width:20%; text-align:left"><label for="f_<?php echo $value['id'];?>"><input id="f_<?php echo $value['id'];?>" type="radio" style="border:0" name="lang_id" value="<?php echo $value['id'];?>" <?php if($value['lang_main']){ echo 'checked=checked';}?>/><?php echo $value['lang_name'];?><?php if($value['lang_main']){echo "(默认)";}?></label></td><td style="width:20%; text-align:center"><?php echo $value['lang_tag'];?></td><td style="width:10%; text-align:center"><?php if($value['lang_is_use']){ echo "是";}else{ echo "<span style=\"color:red\">否</span>";}?></td><td style="width:20%; text-align:center"><?php if($value['lang_is_url']){ echo "是";}else{ echo "否";}?></td><td style="width:20%; text-align:center"><a style="padding:0 5px;" href="admin_lang.php?action=lang_edit&lang=<?php echo $value['lang_tag'];?>">修改</a>|<a href="?action=import_lang&lang=<?php echo $value['lang_tag'];?>">导出语言包</a>|<a href="?action=backup_lang&lang=<?php echo $value['lang_tag'];?>">导入语言包</a><?php if(!$value['lang_is_fix']){?>|<a href="javascript:if(confirm('确定要删除么,删除后不可恢复!')){location.href='admin_lang.php?action=lang_dl&lang=<?php echo $value['lang_tag'];?>';}" style="padding:0 5px;">删除</a><?php }?></td>
+		</tr>	
+	<?php
+	}
+	?>
+	</tbody>
+ </table>
+ </div>
+  <div class="btn" style="margin-top:8px; margin-bottom:10px; margin-left:100px;">
+<input type="hidden" name="action" value="lang_main"/>
+ <input type="submit" value="设置默认语言" style="margin:0 10px 0 0;"/>
+ </div>
+</form>
+</div>
+
+</body>
+</html>

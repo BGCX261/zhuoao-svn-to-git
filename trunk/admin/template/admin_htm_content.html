@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>生成内容</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$('tbody').find('tr').hover(function(){
+		//$(this).css('background','#ccc');
+	},function(){
+		//$(this).css('background','none');
+	});
+	
+});
+
+function all_sl(str){
+		$ck=$('#'+str).attr('checked');
+		if($ck){
+			$('table').find('#'+str).find('input').attr('checked','checked');
+		}else{
+			$('table').find('#'+str).find('input').attr('checked','');
+		}
+	}
+
+</script>
+<?php
+	$tech_num = (count($tech_arr)-1);
+	$show_tech = $tech_arr[rand(0,$tech_num)];
+?>
+<!--
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$str = '<?php echo $show_tech;?>';
+		$('#show_tech').html("<em>小提示：</em>"+$str).fadeIn('slow');
+	});
+
+</script>
+-->
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 生成内容</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+
+<div class="div_out">
+ 		<div class="lang">
+			<ul>
+			 <?php
+ $cache_file=DATA_PATH."cache/lang_cache.php";
+ $cache_arr=read_cache($cache_file,'lang_cache');
+ if(!empty($cache_arr)){
+ foreach($cache_arr as $k=>$v){
+  if(!$v['lang_is_use']){continue;}
+ ?>
+ <li><a href="?action=content&lang=<?php echo $v['lang_tag'];?>" class="<?php if($GLOBALS['lang']==$v['lang_tag']){echo 'hover';}?>"><?php echo $v['lang_name'];?></a></li>
+ <?php
+ }
+ }
+ ?>
+			</ul>
+		</div><!--语言-->
+<div class="order_contain">	
+<div class="order_main">
+	<form name="maininfo" method="post" action="?action=content_htm" class="form">	
+ <table cellpadding="0" cellspacing="0" width="100%">
+ 	<thead>
+		<tr><th style="width:15%">参数说明</th><th style="width:65%">参数值</th></tr>
+	</thead>
+
+	<tbody>
+
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">选择栏目：<input type="checkbox" style="border:0" value="" name="all_3" id="all" onclick="all_sl('all');"  title="全选"/></td><td style="width:65%" id="all"><?php
+	if(!empty($category)){
+	foreach($category as $key=>$value){
+	if(in_array($value['cate_tpl'],array('1','2','3'))){continue;}
+	if($value['cate_channel']=='-9'){continue;}
+	?>
+	<label for="<?php echo $value['id'];?>"><input id="<?php echo $value['id'];?>" type="checkbox" name="cate[]" value="<?php echo $value['id'];?>" style="margin:0 5px; margin-left:8px;border:0"/><?php echo $value['cate_name'];?></label>
+	<?php
+	}
+	}
+	?>
+	</td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">定义ID生成</td><td style="width:65%" id="all">从<input name="html_b" value="0" style="width:30px"/>到<input name="html_e" value="20" style="width:30px;"/>&nbsp;<span style="color:#000099">格式为limit 0,20 按最新发布内容排序  不勾选栏目使用该方式</span></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">每组生成</td><td style="width:65%" id="all"><input name="html_num" value="20" style="width:20px;"/></td>
+		</tr>
+	
+	</tbody>
+ </table>
+ 	<div class="order_btn">
+  <input name="lang" type="hidden" value="<?php echo $lang?>" /><input type="hidden" name="htm" value="1" /><input name="cate_is" value="1" type="hidden" /><input type="hidden" name="step" value="1" />
+  <input type="submit" value="确定" name="submit"/><input type="reset" style="margin:0 10px;" value="重置" name="reset"/>
+  </div>
+  	</form>
+ </div>
+ </div>
+
+</body>
+</html>

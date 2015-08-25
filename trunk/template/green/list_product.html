@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description" content="{print cateinfo('cate_info_seo')/}">
+<meta name="keywords" content="{print cateinfo('cate_key_seo')/}">
+<title>{print cateinfo('cate_name')/}_{print webinfo('web_name')/}</title>
+<link href="{path template/}/images/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{path template/}/images/jquery.js"></script>
+<script type="text/javascript" src="{path template/}/images/nav.js"></script>
+</head>
+<body>
+{include head/}
+<div class="div_margin"></div>
+<div class="contain">
+	<div class="contain_left">
+		<!--产品导航 开始-->
+		{assign source=get_tpl_list_nav('3') name=tree/}
+		{if $tree}
+		<div class="box left_width">
+			<div class="left_title"><h2>{print weblangs('products_nav')/}</h2></div>
+			<div class="box_in">
+				<div id="category_tree">
+					{loop source=$tree item=$nav}
+					<dl>
+						<dt>
+                        <span class="c_icon"></span>
+                        <a class="{print $nav['class']/}" href="{print $nav['url']/}" {print $nav['target']/} title="{print $nav['cate_name']/}">{print $nav['cate_name']/}</a>
+                        </dt>
+						<!--dd style="display: none;" id="nav_16"-->
+                        <dd style="display: none;">
+						<ul>
+							{loop source=$nav['child']}
+							<li><a class="{print $v['class']/}" href="{if $v['cate_tpl'] != 1 } {print $v['url']/} {else} {print 'javascript:;'/} {/if}">{print $v['cate_name']/}</a></li>
+							{/loop}
+						</ul>
+						</dd>
+					</dl>
+					{/loop}
+				</div>
+			</div>
+		</div>
+		{/if}
+		<!--产品导航 结束-->
+		<!--热门内容 开始-->
+		<!--<div class="div_margin"></div>
+		{assign source=get_else_content($cate_id='',$limit='0,5',$order_type='hits',$filter='',$pic='no',$order='desc',$lang='') name=hot_arc/}
+		{if $hot_arc}
+		<div class="box">
+			<div class="left_title"><h2>{print weblangs('hot_content')/}</h2></div>
+			<div class="box_in">
+				<div class="news_list">
+					<ul>
+						{loop source=$hot_arc}
+						<li><a title="{print $v['title']/}" href="{print $v['url']/}" {print $v['target']/} {if $v['style']}style="{print $v['style']/}"{/if}>{print cn_substr($v['title'],40)/}</a>{print date('m-d',$v['updatetime'])/}</li>
+						{/loop}
+					</ul>  
+				</div>  
+			</div>
+		</div>
+		{/if}-->
+		<!--热门内容 结束-->
+		<!--联系方式 开始-->
+		<!--<div class="box">
+			<div class="left_title"><h2>{print weblangs('contact')/}</h2></div>
+			<div class="box_in">
+				<div class="contact">
+					{print get_block_content('contact_us')/}
+				</div>
+			</div>
+		</div>-->
+		<!--联系方式 结束-->
+		
+	</div><!--左边内容-->
+	<div class="contain_right">
+		
+		<div class="box">
+			<div class="box_title"><h2 class="position"><span>{print weblangs('location')/}:{position source=position/} > {print weblangs('tpl_list')/}</span></h2></div>
+			<div class="box_in">
+				<ul class="ul_list_pic">
+					{loop source=list_article()}
+					<li><a href="{print $v['url']/}" {print $v['target']/}><img src="{print $v['thumb_pic']/}" width="156" height="156" border="0" alt="{print $v['title']/}" /><span class="time" style="{print $v['style']/}">{print $v['title']/}</span></a></li>
+					{/loop}
+				</ul>
+				<div class="clear"></div>
+				<div class="page_fy">
+					{print list_page()/}
+				</div> 
+				<div class="clear"></div>
+			</div>
+		</div><!--容器结束-->
+	</div>
+	<div class="clear"></div>
+</div>
+{include foot/}
+</body>
+</html>

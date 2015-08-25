@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>会员分组</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#bs').blur(function(){
+		$('#table').val($(this).val());
+	});
+	$('tbody').find('tr').hover(function(){
+		//$(this).css('background','#ccc');
+	},function(){
+		//$(this).css('background','none');
+	});
+	$('#c_all').click(function(){
+		$is_ck=$(this).attr('checked');
+		if($is_ck){
+			$('tbody#purview').find("input[type='checkbox']").attr({'disabled':'disabled','checked':'checked'});
+		}else{
+			$('tbody#purview').find("input[type='checkbox']").attr({'disabled':'','checked':''});
+		}
+	});
+});
+function all_sl(str){
+		$ck=$('#'+str).attr('checked');
+		if($ck){
+			$('td#'+str).find('input').attr('checked','checked');
+		}else{
+			$('td#'+str).find('input').attr('checked','');
+		}
+	}
+</script>
+<?php
+	$tech_num = (count($tech_arr)-1);
+	$show_tech = $tech_arr[rand(0,$tech_num)];
+?>
+<!--
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$str = '<?php echo $show_tech;?>';
+		$('#show_tech').html("<em>小提示：</em>"+$str).fadeIn('slow');
+	});
+
+</script>
+-->
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 添加会员分组</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+<div class="order_contain">
+<form name="maininfo" method="post" enctype="multipart/form-data" action="?" class="form">
+ <div class="order_main">
+ <table cellpadding="0" cellspacing="0" width="100%">
+ 	<thead>
+		<tr><th style="width:30%">参数说明</th><th style="width:70%">参数值</th></tr>
+	</thead>
+	<tbody>
+	
+		<tr>
+		  <td style="width:30%;text-align:center" class="w1"><span title="不可重复,将会在栏目、内容等地方使用" class="help">会员组名称：</span></td><td style="width:70%"><input name="member_group_name" value="" style="width:30%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:30%;text-align:center" class="w1">会员组描述：<p style="color:#999999; font-weight:normal"></p></td><td style="width:70%"><textarea name="member_group_info" style="width:50%; height:50px;"></textarea></td>
+		</tr>
+		<tr>
+		  <td style="width:30%;text-align:center" class="w1">是否禁用：<p style="color:#999999; font-weight:normal"></p></td><td style="width:70%"><label for="f1"><input  id="f1" type="radio" name="is_disable" value="0" checked="checked" style="border:0" />开启</label><label for="f2"><input id="f2" type="radio" name="is_disable" value="1" style="border:0" />禁用</label></td>
+		</tr>
+		</tbody>
+ </table>
+ </div>
+<div class="order_btn">
+<input type="hidden" name="action" value="save_membergroup"/>
+  <input type="submit" value="确定" name="submit"/><input type="reset" style="margin:0 10px;" value="重置" name="reset"/>
+ </div>
+</form>
+</div>
+
+</body>
+</html>

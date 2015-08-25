@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>表单信息</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.q').find('ul li').click(function(){
+		$index=$('.q').find('ul li').index(this);
+		$('#tb').find('div').eq($index).show().siblings().hide();
+	});
+});
+</script>
+<?php
+	$tech_num = (count($tech_arr)-1);
+	$show_tech = $tech_arr[rand(0,$tech_num)];
+?>
+<!--
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$str = '<?php echo $show_tech;?>';
+		$('#show_tech').html("<em>小提示：</em>"+$str).fadeIn('slow');
+	});
+
+</script>
+-->
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 查看表单信息</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+<div class="admin_fh"><a href="?action=form_list&lang=<?php echo $lang;?>&id=<?php echo $form_id;?>">返回</a></div>
+<div class="order_contain">
+<div class="caozuo_nav">
+<p style="line-height:24px; font-size:14px;"><span style="font-weight:bold; color:red; padding:0 20px;"><?php echo $form_info['form_name'];?></span><span style="padding:0 10px;">添加时间:<?php echo date('Y-m-d H:m:s',$rel2[0]['form_time']);?></span><span style="padding:0 10px;">IP:<?php echo $rel2[0]['form_ip']; unset($rel2);?></span></p>
+<div class="clear"></div>
+</div><!--小操作导航-->
+<form name="maininfo" method="post" enctype="multipart/form-data" class="form">
+ <div class="order_main">
+ <table cellpadding="0" cellspacing="0" width="100%">
+ 	<thead>
+		<tr><th style="width:20%">参数说明</th><th style="width:80%">参数值</th></tr>
+	</thead>
+	<tbody>
+	<?php
+	unset($rel_arr['id']);
+	if(!empty($rel_arr)){
+	foreach($rel_arr as $key=>$value){
+	$f_name="<span style=\"clear:red\">不存在该说明</span>";
+	if(!empty($field)){
+		foreach($field as $k=>$v){
+			if($v['field_name']==$key){
+			$f_name=$v['use_name'];
+			}
+		}
+	}
+	?>
+		<tr>
+		  <td style="width:20%; text-align:center"><?php echo $f_name;?></td><td style="width:80%"><?php echo $value;?></td>
+		</tr>
+	<?php 
+	}
+	$GLOBALS['mysql']->query("update ".DB_PRE."formlist set is_read=1 where id={$id}");
+	}
+	?>	
+		
+	</tbody>
+ </table>
+ </div>
+</form>
+</div>
+
+</body>
+</html>

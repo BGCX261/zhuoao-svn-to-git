@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>会员管理</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$('tbody').find('tr').hover(function(){
+		//$(this).css('background','#ccc');
+	},function(){
+		//$(this).css('background','none');
+	});
+	
+});
+
+</script>
+<?php
+	$tech_num = (count($tech_arr)-1);
+	$show_tech = $tech_arr[rand(0,$tech_num)];
+?>
+<!--
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$str = '<?php echo $show_tech;?>';
+		$('#show_tech').html("<em>小提示：</em>"+$str).fadeIn('slow');
+	});
+
+</script>
+-->
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 添加会员</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+<div class="order_contain">
+<form name="maininfo" method="post" enctype="multipart/form-data" action="?" class="form">
+ <div class="order_main">
+ <table cellpadding="0" cellspacing="0" width="100%">
+ 	<thead>
+		<tr><th style="width:15%">参数说明</th><th style="width:85%">参数值</th></tr>
+	</thead>
+	<tbody>
+	
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1"><span title="不可重复,只能使用字母或数字" class="help">登录用户名：</span></td><td style="width:85%"><input name="member_user" value="" style="width:30%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1"><span title="只能使用字母或数字及!@#$%字符" class="help">登录用户密码：</span></td><td style="width:85%"><input name="member_password" type="password" value="" style="width:30%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">用户昵称：</td><td style="width:85%"><input name="member_nich" value="" style="width:30%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">用户组：<p style="color:#999999; font-weight:normal"></p></td><td style="width:85%"><?php if(empty($member_group)){ echo "还没有添加用户组"; }else{?><select name="member_purview">
+		  <?php 
+		  foreach($member_group as $k=>$v){
+		  	if($v['is_disable']){
+				continue;
+			}
+		  	$str.="<option value=\"{$v['id']}\">{$v['member_group_name']}</option>";
+		  }
+		  echo $str;
+		  ?>
+		  </select><?php }?><a href="admin_member.php?action=member_group_add" style="padding-left:5px;">添加管理员用户组</a></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">用户姓名：<p style="color:#999999; font-weight:normal"></p></td><td style="width:85%"><input name="member_name" value="" style="width:30%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">电子邮箱：<p style="color:#999999; font-weight:normal"></p></td><td style="width:85%"><input name="member_mail" value="" style="width:30%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">联系电话：<p style="color:#999999; font-weight:normal"></p></td><td style="width:85%"><input name="member_tel" value="" style="width:30%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">是否禁用：<p style="color:#999999; font-weight:normal"></p></td><td style="width:85%"><label for="f1"><input id="f1" type="radio" name="is_disable" value="0" style="border:0" checked="checked" />开启</label><label for="f2"><input id="f2" type="radio" style="border:0" name="is_disable" value="1" />禁用</label></td>
+		</tr>
+		
+	</tbody>
+ </table>
+ </div>
+<div class="order_btn">
+<input type="hidden" name="action" value="save_member"/>
+  <input type="submit" value="确定" name="submit"/><input type="reset" style="margin:0 10px;" value="重置" name="reset"/>
+ </div>
+</form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+本地部署说明：
+httpd.conf文件中添加：
+例如：
+<virtualHost 127.0.0.3:80>
+    <Directory D:/wamp/www/openSourceItem/BEES_V2.2_R_20120703>
+    Options FollowSymLinks
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+    FileETag None
+    </Directory>
+    DocumentRoot D:/wamp/www/openSourceItem/BEES_V2.2_R_20120703
+    ServerName www.zhuoao.com
+    ServerAlias *.zhuoao.com
+</VirtualHost>
+
+hosts文件中添加：
+例如：
+127.0.0.3 www.zhuoao.com

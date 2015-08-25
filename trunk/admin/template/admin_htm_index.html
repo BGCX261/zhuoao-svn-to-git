@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>管理员</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$('tbody').find('tr').hover(function(){
+		//$(this).css('background','#ccc');
+	},function(){
+		//$(this).css('background','none');
+	});
+	
+});
+
+function all_sl(str){
+		$ck=$('#'+str).attr('checked');
+		if($ck){
+			$('td#'+str).find('input').attr('checked','checked');
+		}else{
+			$('td#'+str).find('input').attr('checked','');
+		}
+	}
+
+</script>
+<?php
+	$tech_num = (count($tech_arr)-1);
+	$show_tech = $tech_arr[rand(0,$tech_num)];
+?>
+<!--
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$str = '<?php echo $show_tech;?>';
+		$('#show_tech').html("<em>小提示：</em>"+$str).fadeIn('slow');
+	});
+
+</script>
+-->
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 栏目管理</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+<div class="div_out">
+ 		<div class="lang">
+			<ul>
+			 <?php
+ $cache_file=DATA_PATH."cache/lang_cache.php";
+ $cache_arr=read_cache($cache_file,'lang_cache');
+ if(!empty($cache_arr)){
+ foreach($cache_arr as $k=>$v){
+  if(!$v['lang_is_use']){continue;}
+ ?>
+ <li><a href="?lang=<?php echo $v['lang_tag'];?>" class="<?php if($GLOBALS['lang']==$v['lang_tag']){echo 'hover';}?>"><?php echo $v['lang_name'];?></a></li>
+ <?php
+ }
+ }
+ ?>
+			</ul>
+		</div><!--语言-->
+<div class="order_contain" style="border:0">		
+<form name="maininfo" method="post" action="?" class="form">
+<p>生成<?php echo $lang_name;?>首页</p>
+<div class="order_main">
+<div style="width:500px; margin:20px 50px">
+<input type="hidden" name="action" value="index"/><input name="lang" type="hidden" value="<?php echo $lang?>" />
+  <input type="submit" value="生成首页" name="submit" class="go"/>
+ </div>
+ </div>
+</form>
+</div>
+
+</body>
+</html>

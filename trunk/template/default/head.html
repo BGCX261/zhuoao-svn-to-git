@@ -1,0 +1,130 @@
+<div class="head_contain">
+<!--登录-->
+<!--
+<div class="login_contain">
+<div class="head_login" id="user_login">
+<form name="form1" action="{path cms/}member.php" method="post">
+<label>{print weblangs('member_login_user')/}:</label><input type="text" id="ajax_user" name="user" style="width:100px" />
+<label>{print weblangs('member_login_pass')/}:</label><input type="password" id="ajax_password" name="password" style="width:100px" />
+<label>{print weblangs('member_login_code')/}:</label><input type="text" name="code" id="ajax_code" style="width:50px" /><img src="{path includes/}/code.php" name="code" border="0" id="code" style="display:block; float:left;cursor:pointer; margin-left:5px; display:inline"/>
+<input type="hidden" id="ajax_lang" value="{print get_web_param('lang')/}" name="lang" /><input type="button" style="border:0; margin-left:5px; display:inline; padding:0" src="{path template/}/images/login_input2.gif" name="go" id="ajax_login" />
+<label><a href="{path member/}/member.php?action=regist&lang={print get_web_param('lang')/}">{print weblangs('member_regist')/}</a></label>
+</form>
+<div class="clear"></div>
+</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#code').click(function(){
+	$(this).attr('src','{path includes/}/code.php?tag='+new Date().getTime());
+	});
+	$.ajax({
+			type:"POST",
+			url:"{path member/}/member.php",
+			data:"action=is_ajax_login&lang="+"{print get_web_param('lang')/}",
+			dataType:"json",
+			success:function(data){
+				if(data.login==1){
+					$('#user_login').html(data.info);
+				}
+			}	
+	});
+	$('#ajax_login').click(function(){
+		$.ajax({
+			type:"POST",
+			url:"{path member/}/member.php",
+			data:"action=ajax_login&lang="+$('#ajax_lang').val()+"&password="+$('#ajax_password').val()+"&user="+$('#ajax_user').val()+"&code="+$('#ajax_code').val(),
+			dataType:"json",
+			success:function(data){
+				if(data.login==1){
+					$('#user_login').html(data.info);
+				}else{
+					alert(data.info);
+				}
+			}
+		});
+	});
+	
+});
+</script>
+-->
+<div class="head">
+	<div class="head_left">
+		<div class="logo">
+        	<a href="{path index/}"><img src="{path template/}/images/{print weblangs('head_logo')/}.gif" border="0" /></a>            
+        </div>
+	</div>    
+    <div class="company_title">
+        {print weblangs('head_manifesto')/}
+    </div>
+	<div class="head_right">
+		<div class="top_menu">
+	        <!-- <a href="#" onclick="javascript:window.external.AddFavorite('http://www.beescms.com','{print webinfo('web_name')/}')" title="收藏本站到你的收藏夹">加入收藏</a> -->
+			{loop source=lang()}
+			<a href="{print $v['url']/}" {print $v['class']/} {print $v['target']/}>{print $v['lang_name']/}</a>
+			{/loop}
+        </div>
+        
+	</div>
+	<div class="clear"></div>
+</div>
+</div>
+<div style="clear:both"></div>
+<div class="head_nav">
+	<div class="nav_left">
+	<div class="nav_right">
+		<ul>
+			<li class="first_li {print get_web_param('index_focus')/}"><a href="{path index/}"><span>{print weblangs('index')/}</span></a></li>
+			{loop source=nav_middle() item=$nav_child} 
+			<li class="first_li {print $nav_child['class']/}">
+				<a href="{print $nav_child['url']/}" {print $nav_child['target']/}><span>{print $nav_child['cate_name']/}</span></a>
+	            <ul>
+					{loop source=$nav_child['child']}
+					<li><a href="{print $v['url']/}">{print $v['cate_name']/}</a></li>
+					{/loop}
+				</ul>
+			</li>		
+			{/loop}
+		</ul>
+        
+        <div class="sousuo">
+			<form name="form1" action="{path search/}">
+				<div class="s_margin">
+	            	<input name="key" class="search_text" type="text"/><input type="submit" value="{print weblangs('search')/}" class="find"/><input type="hidden" value="{print get_web_param('lang')/}" name="lang" />
+				</div>
+                <!--
+				<div class="s_margin">
+		            <span>{print weblangs('hot_search')/}：</span>
+					{loop source=get_hot_words()}
+					<a href="{print $v['url']/}">{print $v['name']/}</a>
+					{/loop}
+				</div>
+                -->
+			</form>
+		</div><!--搜索-->
+	</div>
+	</div>
+</div><!--主导航-->
+
+
+
+<script type="text/javascript">
+$(function(){
+	//导航
+	$(".head_nav .first_li").each(function(index, element) {		
+        $(this).hover(function(e) {
+			$(this).addClass("hover");
+            $(this).children("ul").show();
+        }, function(e) {
+			$(this).removeClass("hover");
+            $(this).children("ul").hide();
+        });
+    });
+	
+	//语言
+	$(".top_menu a").each(function(index) {
+        $(this).addClass("lang_"+(index+1));
+    });
+});
+</script>

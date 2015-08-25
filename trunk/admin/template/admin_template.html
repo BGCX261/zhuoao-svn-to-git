@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>模板管理</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#show_list').find('tr').hover(function(){
+		$(this).find('td').css('background','#ccffcc');
+	},function(){
+		$(this).find('td').css('background','');
+	});
+	
+});
+</script>
+<?php
+	$tech_num = (count($tech_arr)-1);
+	$show_tech = $tech_arr[rand(0,$tech_num)];
+?>
+<!--
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$str = '<?php echo $show_tech;?>';
+		$('#show_tech').html("<em>小提示：</em>"+$str).fadeIn('slow');
+	});
+
+</script>
+-->
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 模板管理</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+		<div class="lang">
+			<ul>
+			 <?php
+ $cache_file=DATA_PATH."cache/lang_cache.php";
+ $cache_arr=read_cache($cache_file,'lang_cache');
+ if(!empty($cache_arr)){
+ foreach($cache_arr as $k=>$v){
+  if(!$v['lang_is_use']){continue;}
+ ?>
+ <li><a href="?lang=<?php echo $v['lang_tag'];?>" class="<?php if($GLOBALS['lang']==$v['lang_tag']){echo 'hover';}?>"><?php echo $v['lang_name'];?></a></li>
+ <?php
+ }
+ }
+ ?>
+			</ul>
+		</div><!--语言-->
+
+<div class="order_contain">
+ <div class="order_main">
+ <table cellpadding="0" cellspacing="0" width="100%">
+ 	<thead>
+		<tr><th style="width:20%">文件名</th><th style="width:30%">文件大小</th><th style="width:30%">最后修改时间</th><th style="width:20%">操作</th></tr>
+	</thead>
+	<tbody id="show_list">
+	<?php
+	
+	while(false!=($file=readdir($file_hand))){
+	if($file=='.'||$file=='..'){continue;}
+	$file_info=pathinfo($file);
+	$exe_arr=array('html','htm','shtml');
+	if(!in_array($file_info['extension'],$exe_arr)){
+	continue;
+	}
+	$arr=get_dir_file($file,$path.'/');
+	?>
+		<tr><td style="width:20%;text-align:center" align="center"><?php echo $arr['path']?></td><td style="width:30%;text-align:center" align="center"><?php echo empty($arr['size'])?'&nbsp;':$arr['size'];?></td><td style="width:30%;text-align:center" align="center"><?php echo empty($arr['mtime'])?'&nbsp;':$arr['mtime'];?></td><td style="width:20%;text-align:center" align="center"><?php if(preg_match('/\.html/',$file)){?><a href="?action=xg&lang=<?php echo $lang;?>&file=<?php echo $path.'/'.$file;?>">修改</a><?php }?>&nbsp;</td></tr>
+		<?php 
+		}
+		?>
+		</tbody>
+ </table>
+ </div>
+</div><!--内容切换-->
+<div style="height:100px"></div>
+
+</body>
+</html>

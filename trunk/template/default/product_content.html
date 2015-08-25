@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description" content="{print content('info')/}">
+<meta name="keywords" content="{print content('keywords')/}">
+<title>{print content('title')/}_{print cateinfo('cate_name')/}_{print webinfo('web_name')/}</title>
+<link href="{path template/}/images/style.css" rel="stylesheet" type="text/css">
+<link href="{path template/}/images/MagicZoom.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{path template/}/images/mz-packed.js"></script>
+<script type="text/javascript" src="{path template/}/images/jquery.js"></script>
+<script type="text/javascript" src="{path template/}/images/nav.js"></script>
+</head>
+<body>
+{include head/}
+<div class="div_margin"></div>
+<div class="contain">
+	<div class="contain_left">
+		<!--产品导航 开始-->
+		{assign source=get_tpl_list_nav('3') name=tree/}
+		{if $tree}
+		<div class="box left_width">
+			<div class="left_title"><h2>{print weblangs('products_nav')/}</h2></div>
+			<div class="box_in">
+				<div id="category_tree">
+					{loop source=$tree item=$nav}
+					<dl>
+						<dt><span class="c_icon"></span><a class="{print $nav['class']/}" href="{print $nav['url']/}" {print $nav['target']/} title="{print $nav['cate_name']/}">{print $nav['cate_name']/}</a></dt>
+
+						<dd style="display: none;" id="nav_16">
+						<ul>
+							{loop source=$nav['child']}
+							<li><a class="{print $v['class']/}" href="{if $v['cate_tpl'] != 1 } {print $v['url']/} {else} {print 'javascript:;'/} {/if}">{print $v['cate_name']/}</a></li>
+							{/loop}
+						</ul>
+						</dd>
+					</dl>
+					{/loop}
+				</div>
+			</div>
+		</div>
+		{/if}
+		<!--产品导航 结束-->
+		<!--热门内容 开始-->
+		<!--<div class="div_margin"></div>
+		{assign source=get_else_content($cate_id='',$limit='0,5',$order_type='hits',$filter='',$pic='no',$order='desc',$lang='') name=hot_arc/}
+		{if $hot_arc}
+		<div class="box">
+			<div class="left_title"><h2>{print weblangs('hot_content')/}</h2></div>
+			<div class="box_in">
+				<div class="news_list">
+					<ul>
+						{loop source=$hot_arc}
+						<li><a title="{print $v['title']/}" href="{print $v['url']/}" {print $v['target']/} {if $v['style']}style="{print $v['style']/}"{/if}>{print cn_substr($v['title'],40)/}</a>{print date('m-d',$v['updatetime'])/}</li>
+						{/loop}
+					</ul>  
+				</div>  
+			</div>
+		</div>
+		{/if}-->
+		<!--热门内容 结束-->
+		<!--联系方式 开始-->
+		<!--<div class="box">
+			<div class="left_title"><h2>{print weblangs('contact')/}</h2></div>
+			<div class="box_in">
+				<div class="contact">
+					{print get_block_content('contact_us')/}
+				</div>
+			</div>
+		</div>-->
+		<!--联系方式 结束-->
+	
+	</div><!--左边内容-->
+	<div class="contain_right">
+		
+		<div class="box">
+			<div class="box_title"><h2 class="position"><span>{print weblangs('location')/}:{position source=$position/} > {print content('style_title')/}</span></h2></div>
+			<div class="box_in">
+				<!-- <p class="title" style="{print content('style')/}">{print content('title')/}</p> -->
+  <!--<!--<p class="info"><span>{print weblangs('content_hits')/}:<script language="javascript" src="{path includes/}/hits.php?id={print content('id')/}"></script></span><span>{print weblangs('content_pubdate')/}:{print date('Y-m-d H:m:s',content('updatetime'))/}</span><span><a href="javascript:window.print()">【{print weblangs('print')/}】</a></span><span><a href="javascript:self.close()">【{print weblangs('close')/}】</a></span></p>-->
+ 
+  <div class="show_product">
+  <div class="show_left">
+   <div class="img">
+    {loop source=album('pics')}
+	{if $v['first']}
+   <a href="{print $v['pic']/}" class="MagicZoom MagicThumb" id="zoom">
+    <img src="{print $v['pic']/}"  width="298" height="298" title="pic"/>
+   </a>
+   {/if}
+   {/loop}
+   </div>
+   <div class="img_go">
+    <span onmouseover="moveRight()" onmousedown="clickRight()" onmouseup="moveRight()" onmouseout="scrollStop()"></span>
+      <div class="gallery">
+        <div id="demo">
+          <div id="demo1" style="float:left">
+            <ul>
+            {loop source=album('pics')}<li><a rel="zoom" title="{print $v['alt']/}" href="{print $v['pic']/}" rev="{print $v['pic']/}"><img src="{print $v['thumb']/}" alt="{print $v['alt']/}" class="B_blue" /></a></li>{/loop}
+            </ul>
+          </div>
+          <div id="demo2" style="display:inline; overflow:visible;"></div>
+        </div>
+      </div>
+      <span onmouseover="moveLeft()" onmousedown="clickLeft()" onmouseup="moveLeft()" onmouseout="scrollStop()" class="spanR"></span>
+	  <div class="clear"></div>
+      <script>
+      function $gg(id){  
+        return (document.getElementById) ? document.getElementById(id): document.all[id]
+      }
+      
+      var boxwidth=55;//跟图片的实际尺寸相符
+      
+      var box=$gg("demo");
+      var obox=$gg("demo1");
+      var dulbox=$gg("demo2");
+      obox.style.width=obox.getElementsByTagName("li").length*boxwidth+'px';
+      dulbox.style.width=obox.getElementsByTagName("li").length*boxwidth+'px';
+      box.style.width=obox.getElementsByTagName("li").length*boxwidth*3+'px';
+      var canroll = false;
+      if (obox.getElementsByTagName("li").length >= 4) {
+        canroll = true;
+        dulbox.innerHTML=obox.innerHTML;
+      }
+      var step=5;temp=1;speed=50;
+      var awidth=obox.offsetWidth;
+      var mData=0;
+      var isStop = 1;
+      var dir = 1;
+      
+      function s(){
+        if (!canroll) return;
+        if (dir) {
+      if((awidth+mData)>=0)
+      {
+      mData=mData-step;
+      }
+      else
+      {
+      mData=-step;
+      }
+      } else {
+        if(mData>=0)
+        {
+        mData=-awidth;
+        }
+        else
+        {
+        mData+=step;
+        }
+      }
+      
+      obox.style.marginLeft=mData+"px";
+      
+      if (isStop) return;
+      
+      setTimeout(s,speed)
+      }
+      
+      
+      function moveLeft() {
+          var wasStop = isStop;
+          dir = 1;
+          speed = 50;
+          isStop=0;
+          if (wasStop) {
+            setTimeout(s,speed);
+          }
+      }
+      
+      function moveRight() {
+          var wasStop = isStop;
+          dir = 0;
+          speed = 50;
+          isStop=0;
+          if (wasStop) {
+            setTimeout(s,speed);
+          }
+      }
+      
+      function scrollStop() {
+        isStop=1;
+      }
+      
+      function clickLeft() {
+          var wasStop = isStop;
+          dir = 1;
+          speed = 25;
+          isStop=0;
+          if (wasStop) {
+            setTimeout(s,speed);
+          }
+      }
+      
+      function clickRight() {
+          var wasStop = isStop;
+          dir = 0;
+          speed = 25;
+          isStop=0;
+          if (wasStop) {
+            setTimeout(s,speed);
+          }
+      }
+      </script> 
+   </div><!--滚动-->
+  </div><!--相册500px-->
+  <div class="show_right">
+   <h1 class="product_name">{print weblangs('tpl_cpmc')/}: {print content('title')/}</h1>
+   <ul>
+    <!-- <li>
+    	<div class="info_tt">{print weblangs('tpl_model')/}:</div>
+        <div class="info_con">{print content('model')/}</div>
+    </li> -->
+    <li>
+    	<div class="info_tt">{print weblangs('tpl_cptd')/}:</div>
+        <div class="info_con">{print content('features')/}</div>
+    </li>
+	<!-- <li><span>{print weblangs('tpl_marketprice')/}:</span>{print content('marketprice')/}</li> -->
+	<!-- <li><a href="{path book/}/book.php?lang=cn&pr_id={print content('id')/}" class="ask"></a><a href="{path order/}/order.php?id=12&pr_id={print content('id')/}" class="order"></a></li> -->
+   </ul>
+  </div><!--详细-->
+  <div class="clear"></div>
+  </div><!--产品展示-->
+  
+  <div class="arc_body">
+	  <div class="details_info">	
+		  <div class="details_info_title"><h3>{print weblangs('tpl_content')/}</h3></div>
+		  <div class="details_info_content">
+			  {print content('content')/}	
+              <!--		  
+			  <div class="page_fy" style="float:none;margin-left:300px;">
+				  {print body_pages()/}
+			  </div>
+              -->
+		  </div>
+          
+          <div class="details_info_title"><h3>{print weblangs('tpl_casm')/}</h3></div>
+		  <div class="details_info_content">
+			  {print content('parameter')/}
+		  </div>
+          
+          <div class="details_info_title"><h3>{print weblangs('tpl_bzsm')/}</h3></div>
+		  <div class="details_info_content">
+			  {print content('package')/}
+		  </div>
+	  </div>
+
+  </div>
+  
+ <div class="arc_link">
+ 	<span class="left">{print content('prev')/}</span>
+    <span class="right">{print content('next')/}</span>
+ </div>
+ </div><!--右边-->
+ <div class="clear"></div>
+				
+			</div>
+		</div><!--容器结束-->
+		<div class="clear"></div>
+	</div>
+	
+</div>
+
+{include foot/}
+</body>
+</html>

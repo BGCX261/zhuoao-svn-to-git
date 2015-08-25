@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>管理员</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<script type="text/javascript">
+/*
+$(document).ready(function(){
+
+	$('tbody').find('tr').hover(function(){
+		$(this).css('background','#ccc');
+	},function(){
+		$(this).css('background','none');
+	});
+	
+});
+*/
+</script>
+<?php
+	$tech_num = (count($tech_arr)-1);
+	$show_tech = $tech_arr[rand(0,$tech_num)];
+?>
+<!--
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$str = '<?php echo $show_tech;?>';
+		$('#show_tech').html("<em>小提示：</em>"+$str).fadeIn('slow');
+	});
+
+</script>
+-->
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 修改管理员</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+<div class="order_contain">
+<form name="maininfo" method="post" enctype="multipart/form-data" action="admin_admin.php" class="form">
+ <div class="order_main">
+ <table cellpadding="0" cellspacing="0" width="100%">
+ 	<thead>
+		<tr><th style="width:30%">参数说明</th><th style="width:70%">参数值</th></tr>
+	</thead>
+	<tbody>
+	
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1"><span title="不可重复,只能使用字母或数字" class="help">登录用户名：</span></td><td style="width:85%"><input name="admin_name" value="<?php echo $rel['admin_name'];?>" disabled="disabled" style="width:30%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">旧密码：</td><td style="width:85%"><input type="password" name="admin_password_ago" value="" style="width:30%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1"><span title="只能使用字母或数字及!@#$%字符" class="help">新密码：</span></td><td style="width:85%"><input type="password" name="admin_password" value="" style="width:30%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">确认新密码：</td><td style="width:85%"><input type="password" name="admin_password_tow" value="" style="width:30%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1"><span title="发布内容时使用" class="help">用户昵称：</span></td><td style="width:85%"><input name="admin_nich" value="<?php echo isset($rel['nich'])?$rel['nich']:'';?>" style="width:30%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">用户组：</td><td style="width:85%"><?php if(empty($admin_group)){ echo "还没有添加用户组"; }else{?><select name="purview">
+		  <?php 
+		  foreach($admin_group as $k=>$v){
+		  $sl="";
+		  if($v['is_disable']){
+		  	continue;
+		  }
+		  	if($rel['admin_purview']==$v['id']){
+				$sl="selected=\"selected\"";
+			}
+		  	$str.="<option value=\"{$v['id']}\" {$sl}>{$v['admin_group_name']}</option>";
+		  }
+		  echo $str;
+		  ?>
+		  </select><?php }?><a href="admin_admin.php?action=add_admin_group" style="padding-left:5px;">添加管理员用户组</a></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">用户姓名：<p style="color:#999999; font-weight:normal"></p></td><td style="width:85%"><input name="admin_admin" value="<?php echo $rel['admin_admin'];?>" style="width:30%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">电子邮箱：<p style="color:#999999; font-weight:normal"></p></td><td style="width:85%"><input name="admin_mail" value="<?php echo $rel['admin_mail'];?>" style="width:30%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">联系电话：<p style="color:#999999; font-weight:normal"></p></td><td style="width:85%"><input name="admin_tel" value="<?php echo $rel['admin_tel'];?>" style="width:30%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:15%;text-align:center" class="w1">是否禁用：<p style="color:#999999; font-weight:normal"></p></td><td style="width:85%"><label for="f1"><input type="radio" id="f1" name="is_disable" value="0" style="border:0" <?php if(!$rel['is_disable']){?>checked="checked"<?php }?> />开启</label><label for="f2"><input id="f2" type="radio" name="is_disable" value="1" style="border:0"  <?php if($rel['is_disable']){?>checked="checked"<?php }?>/>禁用</label></td>
+		</tr>
+		
+	</tbody>
+ </table>
+ </div>
+<div class="order_btn">
+<input type="hidden" name="action" value="save_admin_edit"/><input type="hidden" name="id" value="<?php echo $id;?>" />
+  <input type="submit" value="确定" name="submit"/><input type="reset" style="margin:0 10px;" value="重置" name="reset"/>
+ </div>
+</form>
+</div>
+
+</body>
+</html>

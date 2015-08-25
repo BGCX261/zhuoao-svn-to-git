@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description" content="{print webinfo('web_description')/}">
+<meta name="keywords" content="{print webinfo('web_keywords')/}">
+<title>{print webinfo('web_name')/}</title>
+<link href="{path template/}/images/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{path template/}/images/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="{path template/}/images/nav.js"></script>
+<script type="text/javascript" src="{path template/}/images/pic_go.js"></script>
+</head>
+<body>
+{include head/}
+<div class="div_margin"></div>
+<div class="flash">
+{flash/}
+</div><!--幻灯-->
+<div class="div_margin"></div>
+<div class="contain c_margin" id="index_content">
+    <!--核心优势 开始-->
+    <div class="hexinyoushi box">
+        <div class="box_title"><h2>{print weblangs('core_superiority')/}</h2></div>
+        <div class="box_in">
+            <div class="j_content">
+                {print get_block_content('core_superiority')/}	
+            </div>
+            <!-- <div class="more"><a href="#">&gt;&gt;</a></div> -->
+        </div>
+    </div>
+    <!--核心优势 结束-->
+
+    <!--企业新闻 开始-->
+    {assign source=get_tpl_cate_content($tpl_id='1',$limit='0,5',$order_type='',$filter='',$pic='no',$order='',$lang='') name=index_arc/}
+    {if $index_arc}
+    <div class="index_news box">
+        <div class="news_title"><h2>{print $index_arc['cate']['cate_name']/}</h2></div>
+        <div class="news_list">
+            <ul>
+                {loop source=$index_arc['contents']}
+                <li><a title="{print $v['title']/}" href="{print $v['url']/}" {print $v['target']/} {if $v['style']}style="{print $v['style']/}"{/if}>{print cn_substr($v['title'],60)/}</a>{print date('m-d',$v['updatetime'])/}</li>
+                {/loop}
+            </ul>
+            <div class="more"><a href="{print $index_arc['cate']['cate_url']/}">{print weblangs('view_more')/}</a></div>
+        </div>  
+
+    </div>
+    {/if}
+    <!--企业新闻 结束-->
+	
+    <!--产品导航 开始-->
+    <!--
+    <div class="box">
+        <div class="left_title"><h2>{print weblangs('products_nav')/}</h2></div>
+        <div class="box_in">
+            <div id="category_tree">
+                {assign source=get_tpl_list_nav('3') name=tree/}
+                {loop source=$tree item=$nav}
+                <dl>
+                    <dt><span class="c_icon"></span><a class="{print $nav['class']/}" href="{print $nav['url']/}" {print $nav['target']/} title="{print $nav['cate_name']/}">{print $nav['cate_name']/}</a></dt>
+
+                    <dd style="display: none;" id="nav_16">
+                    <ul>
+                        {loop source=$nav['child']}
+                        <li><a href="{if $v['cate_tpl'] != 1 } {print $v['url']/} {else} {print 'javascript:;'/} {/if}">{print $v['cate_name']/}</a></li>
+                        {/loop}
+                    </ul>
+                    </dd>
+                </dl>
+                {/loop}
+            </div>
+        </div>
+    </div>
+    -->
+    <!--产品导航 结束-->
+    
+    <!--热门内容 开始-->
+    <!--
+    {assign source=get_all_cate_content($tpl_id='2',$content='yes',$limit='0,8',$order_type='id',$filter='',$pic='no',$order='desc',$lang='') name=arc/}
+    {if $arc}
+    {loop source=$arc item=$arc_v}
+    <div class="box">
+        <div class="left_title"><h2><a href="{print $arc_v['cate']['cate_url']/}">{print $arc_v['cate']['cate_name']/}</a></h2></div>
+        <div class="box_in">
+            <div class="news_list">
+                <ul>
+                    {loop source=$arc_v['contents']}
+                    <li><a title="{print $v['title']/}" href="{print $v['url']/}" {print $v['target']/} {if $v['style']}style="{print $v['style']/}"{/if}>{print cn_substr($v['title'],40)/}</a>{print date('m-d',$v['updatetime'])/}</li>
+                    {/loop}
+                </ul>  
+            </div>  
+        </div>
+    </div>
+    {/loop}
+    {/if}-->
+    <!--热门内容 结束-->
+    
+    <!--联系方式 开始-->
+    <!--<div class="box">
+        <div class="left_title"><h2>{print weblangs('contact')/}</h2></div>
+        <div class="box_in">
+            <div class="contact">
+                {print get_block_content('contact_us')/}
+            </div>
+        </div>
+    </div>-->
+    <!--联系方式 结束-->
+	
+    <!--工程案例 开始-->
+    <div class="gongchenganli box">
+        <div class="box_title"><h2>{print weblangs('projects_us')/}</h2></div>
+        <div><img src="{path template/}/images/bg_gcal.jpg" border="0" /></div>
+        <div class="box_in">        	
+            <div class="j_content">
+                {print get_block_content('projects_us')/}	
+            </div>
+            <div class="more"><a href="#">{print weblangs('view_more')/}</a></div>
+        </div>
+    </div>
+    <!--工程案例 结束-->
+    
+	<div class="index_left chanpzhanshi box">
+		<div class="contain_right_top">
+            <div class="box_title"></div>
+            <div id="pr_show">
+	            <!-- 产品展示 开始 -->
+				{assign source=get_tpl_cate_content($tpl_id='4',$limit='0,8',$order_type='',$filter='',$pic='no',$order='',$lang=$_GET['lang']) name=index_pr/}            
+	            <h2 class="box_tab" id="box_tab_1">{print $index_pr['cate']['cate_name']/}</h2>
+
+	                <div class="pr_contain">
+	                    <ul class="pr_all_list scrollPics">
+	                        {loop source=$index_pr['contents']}
+	                        <li><a href="{print $v['url']/}"><img src="{print $v['thumb_pic']/}" border="0" /></a><p><a href="{print $v['url']/}" style="{print $v['style']/}">{print $v['title']/}</a></p></li>
+	                        {/loop}
+	                    </ul>
+	                    <div class="more"><a href="{print $index_pr['cate']['cate_url']/}">{print weblangs('view_more')/}</a></div>
+	                </div>
+
+	            <!-- 产品展示 结束 -->
+	            <!-- 产品展示 开始 -->
+				{assign source=get_tpl_cate_content($tpl_id='5',$limit='0,8',$order_type='',$filter='',$pic='no',$order='',$lang=$_GET['lang']) name=index_pr/}
+	            <h2 class="box_tab" id="box_tab_2">{print $index_pr['cate']['cate_name']/}</h2>
+
+	                <div class="pr_contain">
+	                    <ul class="pr_all_list scrollPics">
+	                        {loop source=$index_pr['contents']}
+	                        <li><a href="{print $v['url']/}"><img src="{print $v['thumb_pic']/}" border="0" /></a><p><a href="{print $v['url']/}" style="{print $v['style']/}">{print $v['title']/}</a></p></li>
+	                        {/loop}
+	                    </ul>
+	                    <div class="more"><a href="{print $index_pr['cate']['cate_url']/}">{print weblangs('view_more')/}</a></div>
+	                </div>
+
+	            <!-- 产品展示 结束 -->
+            </div>
+		</div>
+        
+		<!--
+        <div class="div_margin"></div>
+		{assign source=get_tpl_cate_content($tpl_id='3',$limit='0,8',$order_type='',$filter='',$pic='no',$order='',$lang='') name=index_pr/}
+		<div class="pr">
+			<div class="right_box">
+				<div class="right_title"><h2><a href="{print $index_pr['cate']['cate_url']/}">{print $index_pr['cate']['cate_name']/}</a></h2></div>
+				<div class="box_in mouse">
+					<span class="pic_left" id="prev"></span>
+					<div class="pic_contain" id="pic_go">
+						<ul class="pr_list" id="g">
+							{loop source=$index_pr['contents']}
+							<li><a href="{print $v['url']/}"><img src="{print $v['thumb_pic']/}" border="0" /></a><p><a href="{print $v['url']/}" style="{print $v['style']/}">{print $v['title']/}</a></p></li>
+							{/loop}
+						</ul>
+					</div>	
+					<span class="pic_right" id="next"></span>
+					<div class="clear"></div>
+					<SCRIPT type="text/javascript">						
+						var scrollPic_02 = new ScrollPic();
+						scrollPic_02.scrollContId   = "g";
+						scrollPic_02.arrLeftId      = "prev";//左箭头ID
+						scrollPic_02.arrRightId     = "next"; //右箭头ID
+						scrollPic_02.frameWidth     = 595;//显示框宽度
+						scrollPic_02.pageWidth      = 120; //翻页宽度
+						scrollPic_02.speed          = 10; //移动速度(毫秒，越小越快)
+						scrollPic_02.space          = 10; //每次移动像素(单位px，越大越快)
+						scrollPic_02.autoPlay       = true; //自动播放
+						scrollPic_02.autoPlayTime   = 3; //自动播放间隔时间(秒)
+						scrollPic_02.initialize(); //初始化						
+					</SCRIPT>
+				</div>
+			</div>
+		</div>
+        -->
+        <!--产品-->
+		
+	</div><!--右边内容-->   
+
+
+</div>
+
+
+
+<!--
+<div class="web_link">
+	<div class="link_title"><h2>{print weblangs('links')/}</h2></div>
+	<div class="box_in">
+		{assign source=get_link(1) name=logo/}
+		{if $logo}
+		<ul class="link_logo">
+			{loop source=$logo}
+			<li><a href="{print $v['link_url']/}" title="{print $v['link_name']/}"><img src="{print $v['link_logo']/}" height="31" width="88" border="0" /></a></li>
+			{/loop}
+		</ul>
+		{/if}	
+		<ul style="clear:both">
+			{loop source=get_link()}
+			<li><a href="{print $v['link_url']/}">{print $v['link_name']/}</a></li>
+			{/loop}
+		</ul>
+		<div class="clear"></div>
+	</div>
+	<div class="div_margin"></div>
+</div>
+-->
+<!--友情链接结束-->
+<script type="text/javascript" src="{path template/}/images/jquery.jcarousel.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.scrollPics').jcarousel({
+		wrap: "circular",
+		auto: 1,
+		scroll: 4
+	});
+	
+	var tab_li = $(".chanpzhanshi .box_tab");
+	var tab_con = $(".chanpzhanshi .pr_contain");
+	tab_li.first().addClass("on");
+	tab_con.first().addClass("show");
+	tab_li.each(function(i) {
+        $(this).click(function(e) {
+            $(this).addClass("on").siblings().removeClass("on");
+			tab_con.eq(i).addClass("show").siblings().removeClass("show");
+        });
+    });
+	
+	$("#box_tab_2.box_tab").css("margin-left",($("#box_tab_2.box_tab").width()+20));
+	
+});
+</script>
+{include foot/}
+
+
+</body>
+</html>

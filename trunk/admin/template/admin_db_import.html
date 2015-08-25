@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>恢复数据</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$('tbody').find('tr').hover(function(){
+		//$(this).css('background','#ccc');
+	},function(){
+		//$(this).css('background','none');
+	});
+	
+});
+
+function all_sl(str){
+		$ck=$('#'+str).attr('checked');
+		if($ck){
+			$('td#'+str).find('input').attr('checked','checked');
+		}else{
+			$('td#'+str).find('input').attr('checked','');
+		}
+	}
+
+</script>
+<?php
+	$tech_num = (count($tech_arr)-1);
+	$show_tech = $tech_arr[rand(0,$tech_num)];
+?>
+<!--
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$str = '<?php echo $show_tech;?>';
+		$('#show_tech').html("<em>小提示：</em>"+$str).fadeIn('slow');
+	});
+
+</script>
+-->
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 恢复数据</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+<div style="padding-left:10px;"> <span style="color:#FF0000">请先将需要还原的目录上传到data/backup文件下，还原完成后请手工删除备份文件</span></div>
+<div class="order_contain">
+<div class="order_main">
+ <table cellpadding="0" cellspacing="0" width="100%">
+ 	<thead>
+		<tr><th style="width:40%">文件名</th><th style="width:30%">备份时间</th><th style="width:30%;">操作</th></tr>
+	</thead>
+
+	<tbody>
+	<form name="maininfo" method="post" action="?action=content_htm" class="form">	
+	<?php
+		$handler=@opendir(DATA_PATH.'backup/');
+	if($handler){
+		while(false!==($file=readdir($handler))){
+		$info=pathinfo($file);
+		if(!empty($info['extension'])||$file=='.'||$file=='..'){continue;}
+	?>
+		<tr>
+			<td style="width:40%; text-align:center"><?php echo $file;?></td><td style="width:20%; text-align:center"><?php echo date('Y-m-d H:m:s',(filemtime(DATA_PATH.'backup/'.$file)));?></td><td style="width:20%; text-align:center"><a href="javascript:if(confirm('确定要还原么!')){location.href='?action=save_import&fl=<?php echo $file;?>';}" style="padding:0 5px;">还原数据</a></td>
+		</tr>	
+	<?php
+		}
+	}
+	?>
+	</form>
+	</tbody>
+	
+	
+ </table>
+ </div>
+</div>
+
+</body>
+</html>

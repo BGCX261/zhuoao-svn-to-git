@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>导入字段</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<script type="text/javascript" src="template/images/ck_form.js"></script>
+<script type="text/javascript" src="template/images/admin.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#bs').blur(function(){
+		$('#table').val($(this).val());
+		var $val=$(this).val();
+		$list_php=$val+'/'+$val+'.php';
+		$content_php=$val+'/show_'+$val+'.php';
+		$('#list_php').val($list_php);
+		$('#content_php').val($content_php);
+	});
+	
+});
+</script>
+<?php
+	$tech_num = (count($tech_arr)-1);
+	$show_tech = $tech_arr[rand(0,$tech_num)];
+?>
+<!--
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$str = '<?php echo $show_tech;?>';
+		$('#show_tech').html("<em>小提示：</em>"+$str).fadeIn('slow');
+	});
+
+</script>
+-->
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 导入模型字段</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+		
+<div class="order_contain">
+<form name="maininfo" method="post" enctype="multipart/form-data" action="?" class="form" >
+ <div class="order_main">
+ <table cellpadding="0" cellspacing="0" width="100%" class="table_info1">
+ 	<thead>
+		<tr><th style="width:30%">参数说明</th><th style="width:70%">参数值</th></tr>
+	</thead>
+	<tbody>
+		<tr>
+		  <td style="width:30%;text-align:center" class="w1"></td><td style="width:70%">将要导入的字段放到data/backup目录下，‘文件路径’一栏填写文件名，不带后缀<br />注意：字段导出文件为php文件</td>
+		</tr>
+		<tr>
+		  <td style="width:30%;text-align:center" class="w1"><span title="默认直接填写文件名" class="help">文件路径：</span></td><td style="width:70%"><input name="file_name" value="" style="width:50%" title="文件路径" /></td>
+		</tr>
+		
+	</tbody>
+ </table>
+ </div>
+<div class="order_btn">
+<input type="hidden" name="form_id" value="<?php echo $form_id;?>" />
+<input type="hidden" name="action" value="save_backup"/>
+  <input type="submit" value="确定" name="submit"/><input type="reset" style="margin:0 10px;" value="重置" name="reset"/>
+ </div>
+</form>
+</div>
+
+</body>
+</html>

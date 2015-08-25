@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>添加语言包</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<style type="text/css">
+body{margin:20px;}
+</style>
+</head>
+
+<body>
+<div class="div_out">
+ <div class="position"><h2>当前位置 > 语言管理 > 添加语言</h2></div>
+ <div class="lang"><a href="?lang=cn">中文语言</a><a href="?lang=en">English</a></div>
+</div><!--导航-->
+<form name="maininfo" method="post" enctype="multipart/form-data" action="admin_info.php" class="form" style="margin-top:20px;">
+<div class="div_out" id="tb">
+ <table cellpadding="0" cellspacing="0" width="100%">
+ 	<thead>
+		<tr><th class="w1">参数说明</th><th class="w2">参数值</th><th class="w3">变量名</th></tr>
+	</thead>
+	<tbody>
+		<tr>
+		  <td class="w1">上传图片开启水印:</td><td class="w2"><input type="radio" value="1" name="image_is[]" style="margin:0 5px; border:none" <?php if($image_info['image_is']){?>checked="checked"<?php }?>/>是<input style="margin:0 5px; border:none" type="radio" value="0" name="image_is[]" <?php if(!$image_info['image_is']){?>checked="checked"<?php }?>/>否</td><td class="w3">$image_is</td>
+		</tr>
+		<tr>
+		  <td class="w1">运程下载图片开启水印:</td><td class="w2"><input type="radio" value="1" name="image_url_is[]" style="margin:0 5px; border:none" <?php if($image_info['image_url_is']){?>checked="checked"<?php }?>/>是<input style="margin:0 5px; border:none" type="radio" value="0" name="image_url_is[]" <?php if(!$image_info['image_url_is']){?>checked="checked"<?php }?>/>否</td><td class="w3">$image_url_is</td>
+		</tr>
+		<tr>
+		  <td class="w1">水印类型:</td><td class="w2"><input type="radio" value="0" name="image_type[]" style="margin:0 5px; border:none" <?php if(!$image_info['image_type']){?>checked="checked"<?php }?>/>文字<input style="margin:0 5px; border:none" type="radio" value="1" name="image_type[]" <?php if($image_info['image_type']){?>checked="checked"<?php }?>/>图片</td><td class="w3">$image_type</td>
+		</tr>
+		<tr>
+		  <td class="w1">水印大小(图片水印):</td><td class="w2">高<input type="text" value="<?php echo $image_info['image_height'];?>" name="image_height" style="width:10%; margin:0 5px; "/>宽<input style="margin:0 5px; width:10%;" type="text" value="<?php echo $image_info['image_width'];?>" name="image_width"/></td><td class="w3">$image_width,$image_height</td>
+		</tr>
+		<tr>
+		  <td class="w1">文字(文字水印):</td><td class="w2"><input type="text" name="image_text" value="<?php echo $image_info['image_text'];?>" style="width:50%"/></td><td class="w3">$image_is</td>
+		</tr>
+		<tr>
+		  <td class="w1">水印图片:</td><td class="w2"><img src="<?php echo '../'.$image_info['pics'];?>" border="0"/></td><td class="w3"></td>
+		</tr>
+		<tr>
+		  <td class="w1">上传水印图片:</td><td class="w2"><input type="file" name="pic" /></td><td class="w3">$pic</td>
+		</tr>
+		<tr>
+		  <td class="w1">水印位置</td><td class="w2"><table cellpadding="0" cellspacing="0" width="60%">
+		  	<tr>
+				<td width="20%"><input type="radio" name="image_position[]" value="1" <?php if($image_info['image_position']==1){?>checked="checked"<?php }?>/>顶部居左</td><td width="20%"><input type="radio" name="image_position[]" value="2" <?php if($image_info['image_position']==2){?>checked="checked"<?php }?>/>顶部居中</td><td width="20%"><input type="radio" name="image_position[]" value="3" <?php if($image_info['image_position']==3){?>checked="checked"<?php }?>/>顶部居右</td>
+			</tr>
+			<tr>
+				<td width="20%"><input type="radio" name="image_position[]" value="4" <?php if($image['image_position']==4){?>checked="checked"<?php }?>/>中部居左</td><td width="20%"><input type="radio" name="image_position[]" value="5" <?php if($image_info['image_position']==5){?>checked="checked"<?php }?>/>中部居中</td><td width="20%"><input type="radio" name="image_position[]" value="6" <?php if($image_info['image_position']==6){?>checked="checked"<?php }?>/>中部居右</td>
+			</tr>
+			<tr>
+				<td width="20%"><input type="radio" name="image_position[]" value="7" <?php if($image_info['image_position']==7){?>checked="checked"<?php }?>/>底部居左</td><td width="20%"><input type="radio" name="image_position[]" value="8" <?php if($image_info['image_position']==8){?>checked="checked"<?php }?>/>底部居中</td><td width="20%"><input type="radio" name="image_position[]" value="9" <?php if($image_info['image_position']==9){?>checked="checked"<?php }?>/>底部居右</td>
+			</tr>
+		  </table></td><td class="w3">$image_position</td>
+		</tr>
+	</tbody>
+ </table>
+ </div>
+ <div class="btn" style="margin-top:10px">
+<input type="hidden" name="action" value="save_image"/><input type="hidden" name="lang" value="<?php echo $GLOBALS['lang'];?>"/><input type="hidden" name="pics" value="<?php echo $image_info['pics'];?>"/>
+  <input type="submit" value="确定" name="submit" style="width:15%"/><input type="reset" style="margin:0 10px; width:15%" value="重置" name="reset"/>
+ </div>
+</form>
+
+</body>
+</html>

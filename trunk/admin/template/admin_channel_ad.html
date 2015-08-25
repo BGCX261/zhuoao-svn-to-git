@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>添加语言包</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<script type="text/javascript" src="template/images/ck_form.js"></script>
+<script type="text/javascript" src="template/images/admin.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#bs').blur(function(){
+		$('#table').val($(this).val());
+		var $val=$(this).val();
+		$list_php=$val+'/'+$val+'.php';
+		$content_php=$val+'/show_'+$val+'.php';
+		$('#list_php').val($list_php);
+		$('#content_php').val($content_php);
+	});
+	
+});
+</script>
+<?php
+	$tech_num = (count($tech_arr)-1);
+	$show_tech = $tech_arr[rand(0,$tech_num)];
+?>
+<!--
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$str = '<?php echo $show_tech;?>';
+		$('#show_tech').html("<em>小提示：</em>"+$str).fadeIn('slow');
+	});
+
+</script>
+-->
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 添加内容模型</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+		
+<div class="order_contain">
+<form name="maininfo" method="post" enctype="multipart/form-data" action="admin_channel.php" class="form" >
+ <div class="order_main">
+ <table cellpadding="0" cellspacing="0" width="100%" class="table_info1">
+ 	<thead>
+		<tr><th style="width:30%">参数说明</th><th style="width:70%">参数值</th></tr>
+	</thead>
+	<tbody>
+		<tr>
+		  <td style="width:30%;text-align:center" class="w1"><span title="模型的中文名称，在后台管理，前台发布等均使用此名字" class="help">模型名称：</span></td><td style="width:70%"><input name="channel_name" value="" style="width:50%" reg="[^0]" title="模型名称" /><span name="easyTip">不能为空</span></td>
+		</tr>
+		<tr>
+		  <td style="width:30%;text-align:center" class="w1"><span title="不可重复,用于操作模型，必须为小写英文和数字,填写后不可更改" class="help">模型标识：</span></td><td style="width:70%"><input name="channel_mark" value="" style="width:20%" reg="^\w+$" title="模型标示" id="bs" onblur="javascript:ajax_check(this,'check_channel');" /><span id="loading" style="display:none"></span><span name="easyTip">只能为字母、数字或_组合</span></td>
+		</tr>
+		<tr>
+		  <td style="width:30%;text-align:center" class="w1"><span title="不可重复,必须为小写英文、数字或_" class="help">模型数据表:</span></td><td style="width:70%"><?php echo DB_PRE;?><input id="table" name="channel_table" value="" style="width:15%" reg="^\w+$" title="数据表" onblur="javascript:ajax_check(this,'check_table');" /><span id="loading" style="display:none"></span><span name="easyTip">只能为字母、数字或_组合</span></td>
+		</tr>
+		<tr>
+		  <td style="width:30%;text-align:center" class="w1"><span title="只能使用数字,数字越大排在越前" class="help">模型排序:</span></td><td style="width:70%"><input name="channel_order" value="10" style="width:20%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:30%;text-align:center" class="w1"><span title="处理次级页面的程序" class="help">列表页程序:</span></td><td style="width:70%"><input name="channel_list_php" id="list_php" value="" style="width:40%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:30%;text-align:center" class="w1"><span title="处理最终页面的程序" class="help">内容页程序:</span></td><td style="width:70%"><input name="channel_content_php" id="content_php" value="" style="width:40%" /></td>
+		</tr>
+		<tr>
+		  <td style="width:30%;text-align:center" class="w1">发布内容是否审核：</td><td style="width:70%"><label for="f1"><input id="f1" style="border:none" type="radio" name="is_verify" value="0" checked="checked" />否</label><label for="f2"><input id="f2" type="radio" style="border:none" name="is_verify" value="1"  />是</label></td>
+		</tr>
+		<tr>
+		  <td style="width:30%;text-align:center" class="w1">是否开启：</td><td style="width:70%"><label for="f3"><input id="f3" style="border:none" type="radio" name="is_disable" value="1" />否</label><label for="f4"><input id="f4" type="radio" style="border:none" name="is_disable" value="0" checked="checked" />是</label></td>
+		</tr>
+		<tr>
+		  <td style="width:30%;text-align:center" class="w1"><span title="固定的模型不能删除" class="help"></span>是否固定：</td><td style="width:70%"><label for="f5"><input id="f5" style="border:none" type="radio" name="is_del" value="0" checked="checked"/>否</label><label for="f6"><input id="f6" type="radio" style=" border:none" name="is_del" value="1"  />是</label></td>
+		</tr>
+		
+	</tbody>
+ </table>
+ </div>
+<div class="order_btn">
+<input type="hidden" name="action" value="save_channel"/>
+  <input type="submit" value="确定" name="submit"/><input type="reset" style="margin:0 10px;" value="重置" name="reset"/>
+ </div>
+</form>
+</div>
+
+</body>
+</html>

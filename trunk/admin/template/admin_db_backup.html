@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>数据备份</title>
+<link rel="stylesheet" type="text/css" href="template/admin.css"/>
+<script type="text/javascript" src="template/images/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$('tbody').find('tr').hover(function(){
+		//$(this).css('background','#ccc');
+	},function(){
+		//$(this).css('background','none');
+	});
+	$('#show_list').find('tr').hover(function(){
+		$(this).find('td').css('background','#ccffcc');
+	},function(){
+		$(this).find('td').css('background','');
+	});
+});
+
+function all_sl(str){
+		$ck=$('#'+str).attr('checked');
+		if($ck){
+			$('td#'+str).find('input').attr('checked','checked');
+		}else{
+			$('td#'+str).find('input').attr('checked','');
+		}
+	}
+
+</script>
+<?php
+	$tech_num = (count($tech_arr)-1);
+	$show_tech = $tech_arr[rand(0,$tech_num)];
+?>
+<!--
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$str = '<?php echo $show_tech;?>';
+		$('#show_tech').html("<em>小提示：</em>"+$str).fadeIn('slow');
+	});
+
+</script>
+-->
+</head>
+
+<body>
+<div class="admin_position"><span>当前位置 > 数据备份</span><p id="show_tech" style="display:none"></p></div><!--位置-->
+<div class="order_contain">
+<form name="maininfo" method="post" action="?action=save_back" class="form">	
+<div class="order_main">
+ <table cellpadding="0" cellspacing="0" width="100%">
+ 	<thead>
+		<tr><th style="width:10%">选择</th><th style="width:25%">表名</th><th style="width:20%;">记录数</th><th style="width:20%;">使用空间</th><th style="width:25%;">更新时间</th></tr>
+	</thead>
+
+	<tbody id="show_list">
+	
+	<?php
+	if(!empty($rel)){
+	 foreach($rel as $k=>$v){
+	?>
+		<tr>
+			<td style="width:10%; text-align:center"><input type="checkbox" style="border:0" checked="checked" value="<?php echo $v['Name'];?>" name="db[]" /></td><td style="width:25%; text-align:center"><?php echo $v['Name'];?></td><td style="width:20%;text-align:center"><?php echo $v['Rows'];?></td><td style="width:20%;text-align:center"><?php echo round($v['Data_length']/1024,2).'K';?></td><td style="width:25%;text-align:center"><?php echo $v['Update_time'];?></td>
+		</tr>
+		<?php
+		}
+		}
+		?>
+		<tr>
+			<td style="width:10%; text-align:center">&nbsp;</td><td style="width:25%; text-align:center">分卷大小：<input type="text" style="width:100px;" name="sql_size" value="2048"/>K</td><td style="width:20%;text-align:center">&nbsp;</td><td style="width:20%;text-align:center">&nbsp;</td><td style="width:25%;text-align:center">&nbsp;</td>
+		</tr>
+	</tbody>
+ </table>
+ </div>
+ 
+<div class="order_btn">
+<input type="hidden" name="init" value="1"/>
+  <input type="submit" value="确定" class="go" name="submit"/><input type="reset" style="margin:0 10px;" class="go" value="重置" name="reset"/>
+ </div>
+  </form>
+ </div>
+ 
+<div class="ie8-height"></div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description" content="search">
+<meta name="keywords" content="search">
+<title>{print get_web_param('key')/}_{print weblangs('search_page')/}_{print webinfo('web_name')/}</title>
+<link href="{path template/}/images/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{path template/}/images/jquery.js"></script>
+<script type="text/javascript" src="{path template/}/images/nav.js"></script>
+</head>
+<body>
+{include head/}
+<div class="contain">
+	<div class="search_title">
+	<a href="{path index/}">{print weblangs('return_homePage')/}</a> &gt;
+	{print weblangs('search')/} <span style="color:red; font-weight:bold">{print get_web_param('key')/}</span> {print weblangs('search_result')/}
+	</div>
+{if !get_search()}
+	<div class="search_content">
+		<div class="no_item">{print weblangs('no_content')/}</div>
+	</div>
+{else}	
+	<div class="search_content">
+		{loop source=get_search()}
+		<div class="search_item">
+			<h2><a href="{print $v['url']/}" target="_blank">{print $v['title']/}</a></h2>
+			<p>{print $v['info']/}</p>
+		</div><!--搜索内容-->
+		{/loop}
+		<div class="page_fy">
+		{print get_search_page()/}
+		</div><!--分页-->
+	</div>
+{/if}	
+	
+</div>
+{include foot/}
+</body>
+</html>
